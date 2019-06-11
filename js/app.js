@@ -1,7 +1,9 @@
+//Parametros para el juego
 var parametros = {
     cantFilas: 7,
     cantColumnas: 8
 }
+//Animación del titulo
 function loop(){
     $(".main-titulo").animate({
         opacity: '1',
@@ -27,7 +29,7 @@ $(".btn-reinicio").on("click", function(){
             onComplete: function(){
                 $('div.panel-tablero, div.time').effect('fold');
                 $('h1.main-titulo').addClass('title-over')
-                    .text('Gracias por jugar!');
+                $('h1.main-titulo').text('Gracias por jugar!');
                 $('div.score, div.moves, div.panel-score').width('100%');
             }
         })
@@ -37,6 +39,7 @@ $(".btn-reinicio").on("click", function(){
     }
 });
 /*=====================*/
+//Inicia el juego
 function init(){
     for (let columna = 1; columna <= parametros.cantColumnas; columna++) {
         var cantCaramelos = parametros.cantFilas - $(".col-" + columna).children().length;
@@ -77,7 +80,6 @@ function init(){
 	});
 	$('img').droppable({
 		drop: function(event, ui){
-            console.dir(ui);
             var srcDrag = $(ui.draggable).attr("src")
             var srcDrop = $(this).attr("src");
             $(ui.draggable).attr("src", srcDrop);
@@ -95,15 +97,14 @@ function init(){
 		}
 	});
 }
-
+//Contador de movimientos
 function movimientos(){
     var mov = $("#movimientos-text").text();
     mov++;
     $("#movimientos-text").text(mov);
 }
-
+//Acumulador de puntaje
 function puntuacion(numCaramelos){
-    console.log('puntuacion', numCaramelos);
     var score = parseInt($("#score-text").text());
     switch (numCaramelos) {
         case 3:
@@ -124,9 +125,8 @@ function puntuacion(numCaramelos){
     }
     $("#score-text").text(score);
 }
+//Verifica columnas
 function verificaColumnas(){
-    
-    console.log('verificaColumnas');
     var cont = 0;
     for (let columna = 1; columna <= parametros.cantColumnas; columna++) {
         var carameloColumna = $(".col-" + columna).children().eq(0);
@@ -134,15 +134,12 @@ function verificaColumnas(){
         for (let fila = 1; fila < parametros.cantFilas; fila++) {
             if(cont==0) {arrCaramelos.push(carameloColumna);carameloColumna.addClass("eliminar");}
             var carameloFila = $(".col-" + columna).children().eq(fila);
-            //console.log(carameloColumna.attr('src'),carameloFila.attr('src'));
             if(carameloColumna.attr("src") == carameloFila.attr("src")){
                 carameloFila.addClass("eliminar");
                 cont++;
                 arrCaramelos.push(carameloFila);
             }
             else{
-                /*carameloColumna.removeClass("eliminar");
-                carameloFila.removeClass("eliminar");*/
                 cont = 0;
                 if(arrCaramelos.length<3){
                     arrCaramelos.map(function(a){return a.removeClass('eliminar')});
@@ -153,15 +150,7 @@ function verificaColumnas(){
                 	arrCaramelos.map(function(a){return a.addClass('eliminar2') && a.removeClass('eliminar')});
                     arrCaramelos.splice(0);
                 }
-                //$(".col-" + columna).children().removeClass("eliminar");
-                
             }
-            // if($(".col-" + columna).children().filter(".eliminar").length>=3){
-            //     console.log("3 eliminar....");
-            // }
-            // else{
-                
-            // }
             carameloColumna = carameloFila;
             if(arrCaramelos.length<3 && fila==parametros.cantFilas-1){
             	arrCaramelos.map(function(a){return a.removeClass('eliminar')});
@@ -174,38 +163,10 @@ function verificaColumnas(){
             	cont=0;
             }
         }
-        console.log('');
     }
 }
-// function verificaFilas(){
-//     console.log('verificaFilas');
-//     var cont = 0;
-//     for (let fila = 1; fila <= 6; fila++) {
-//         var carameloFila = $($(".panel-tablero").children()).eq(0).children().eq(fila-1);
-//         for (let columna = 1; columna < 7; columna++) {
-//             carameloFila.addClass("eliminar2");
-//             var carameloColumna = $($(".panel-tablero").children()).eq(columna).children().eq(fila-1);
-//             //var carameloColumna = $(".col-" + columna).children().eq(fila);
-//             console.log(carameloFila.attr('id'),carameloColumna.attr('id'));
-//             if(carameloColumna.attr("src") == carameloFila.attr("src")){
-//                 carameloColumna.addClass("eliminar2");
-//                 cont++;
-//             }
-//             else{
-//                 cont = 0;
-//                 carameloFila.removeClass("eliminar2");
-//                 carameloColumna.removeClass("eliminar2");
-//                 //$(".col-" + columna).children().removeClass("eliminar");
-                
-//             }
-//             if(cont>=2){console.log("3 eliminar....");}
-//             carameloFila = carameloColumna;
-//         }
-//         console.log('');
-//     }
-// }
+//Verifica filas
 function verificaFilas(){
-    console.log('verificaFilas');
     var cont = 0;
     for (let fila = 1; fila <= parametros.cantFilas; fila++) {
         var carameloFila = $($(".panel-tablero").children()).eq(0).children().eq(fila-1);
@@ -213,7 +174,6 @@ function verificaFilas(){
         for (let columna = 1; columna < parametros.cantColumnas; columna++) {
         	if(cont==0) {arrCaramelos.push(carameloFila);carameloFila.addClass("eliminar");}
             var carameloColumna = $($(".panel-tablero").children()).eq(columna).children().eq(fila-1);
-            //console.log(carameloFila.attr('src'),carameloColumna.attr('src'));
             if(carameloColumna.attr("src") == carameloFila.attr("src")){
                 carameloColumna.addClass("eliminar");
                 cont++;
@@ -243,15 +203,16 @@ function verificaFilas(){
             	cont=0;
             }
         }
-        console.log('');
     }
 }
+//Verifica caramelos en filas y columnas
 function verificarCaramelos(){
     verificaColumnas();
     verificaFilas();
     eliminarCaramelos();
     return 0;
 }
+//Eliminar caramelos
 function eliminarCaramelos(){
     if($("img.eliminar2").length>0){
         $("img.eliminar2").effect('pulsate', 600);

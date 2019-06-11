@@ -91,7 +91,6 @@ body{
   font-size: 1.8em;
 }
 div[class^='col']{
-  /*width: 14.28%;*/
   width: 12.28%;
   display: flex;
   flex-flow: column wrap;
@@ -99,25 +98,7 @@ div[class^='col']{
   align-items: center;
 
 }
-
 .elemento{
   width: 99.4px;
   height: 96px;
-
 }
-/*img.eliminar{
-  background-color: green;
-}
-img.eliminar2{
-  background-color: red;
-}
-img.eliminar3{
-  background-color: yellow;
-}
-img.eliminar2.eliminar3{
-  background-color: black !important;
-}
-img:active{
-  background-color:brown;
-  z-index: 100;
-}*/
