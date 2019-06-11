@@ -40,12 +40,8 @@ $(".btn-reinicio").on("click", function(){
 function init(){
     for (let columna = 1; columna <= parametros.cantColumnas; columna++) {
         var cantCaramelos = parametros.cantFilas - $(".col-" + columna).children().length;
-        //cantCaramelos = cantCaramelos == 0 ? cantCaramelos : 6;
         for (let fila = 1; fila <= cantCaramelos; fila++) {
             $(".panel-tablero>.col-" + columna).prepend('<img id="' + fila + columna + '" src="image/' + (Math.floor(Math.random()*5)+1) + '.png" width="92%"/>')
-            /*$("#" + fila + columna).slideUp('slow', function(){
-                
-            })*/
         }    
     }
     $('img').draggable({
@@ -53,7 +49,6 @@ function init(){
 		droppable: 'img',
 		revert: true,
 		revertDuration: 500,
-        //grid: [$(".col-1").width(), $(".col-1>img")[0].height],
         grid: [100,100],
 		zIndex: 10,
 		drag: function(event, candyDrag) {
@@ -77,11 +72,7 @@ function init(){
                 candyDrag.position.bottom = 0;
                 candyDrag.position.left = 0;
                 candyDrag.position.right = Math.min($(".col-1").width(), candyDrag.position.right);
-            }/*
-            candyDrag.position.top = Math.min(100, candyDrag.position.top);
-            candyDrag.position.bottom = Math.min(100, candyDrag.position.bottom);
-            candyDrag.position.left = Math.min(100, candyDrag.position.left);
-            candyDrag.position.right = Math.min(100, candyDrag.position.right);*/
+            }
         }
 	});
 	$('img').droppable({
@@ -282,4 +273,3 @@ function eliminarCaramelos(){
         return;
     }
 }
-//init();
